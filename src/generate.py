@@ -2,9 +2,9 @@ from markdown_blocks import extract_title
 from markdown_blocks import markdown_to_html_node
 import os
 from pathlib import Path
-from main import basepath
 
-def generate_page(from_path, template_path, dest_path):
+
+def generate_page(from_path, template_path, dest_path, basepath="/"):
     print(f"generating page from {from_path} to {dest_path} using {template_path}")
     with open(from_path, "r") as f:
         markdown = f.read()
@@ -18,23 +18,19 @@ def generate_page(from_path, template_path, dest_path):
 
     template = template.replace("{{ Title }}", title)
     template = template.replace('''{{ Content }}''', content)
-    template = template.replace('''href="/''', f"href=\"{basepath}/")
-    template = template.replace('''src="/''', f"src=\"{basepath}/")
+    template = template.replace('href="/', f'href="{basepath}')
+    template = template.replace('src="/', f'src="{basepath}')
     
-
-    
-
-
     if not os.path.exists(os.path.dirname(dest_path)):
         os.makedirs(os.path.dirname(dest_path))
     with open(dest_path, "w") as f:
         f.write(template)
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath="/"):
     for path in Path(dir_path_content).rglob('*.md'):
         from_path = str(path)
         dest_path = from_path.replace(dir_path_content, dest_dir_path).replace(".md", ".html")
-        generate_page(from_path, template_path, dest_path)
+        generate_page(from_path, template_path, dest_path, basepath)
 
 
 

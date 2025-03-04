@@ -7,7 +7,7 @@ import shutil
 import os
 import sys
 
-basepath = f"/{sys.argv[1]}"
+basepath = f"{sys.argv[0]}/"
 
 def from_static_to_public(source_directory, destination_directory):
 
@@ -33,7 +33,8 @@ def main():
    
     delete_directory_content("docs")
     from_static_to_public("static", "docs")
-    generate_pages_recursive("content", "template.html", "docs")
+    generate_pages_recursive("content", "template.html", "docs", basepath)
+    print(basepath)
     
     
 
