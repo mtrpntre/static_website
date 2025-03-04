@@ -5,6 +5,9 @@ from htmlnode import *
 from generate import *
 import shutil
 import os
+import sys
+
+basepath = sys.argv
 
 def from_static_to_public(source_directory, destination_directory):
 
@@ -27,9 +30,10 @@ def delete_directory_content(directory):
             os.remove(item_path)
 
 def main():
-    delete_directory_content("public")
-    from_static_to_public("static", "public")
-    generate_pages_recursive("content", "template.html", "public")
+   
+    delete_directory_content("docs")
+    from_static_to_public("static", "docs")
+    generate_pages_recursive("content", "template.html", "docs")
     
     
 

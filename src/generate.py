@@ -2,6 +2,8 @@ from markdown_blocks import extract_title
 from markdown_blocks import markdown_to_html_node
 import os
 from pathlib import Path
+from main import basepath
+
 def generate_page(from_path, template_path, dest_path):
     print(f"generating page from {from_path} to {dest_path} using {template_path}")
     with open(from_path, "r") as f:
@@ -16,6 +18,9 @@ def generate_page(from_path, template_path, dest_path):
 
     template = template.replace("{{ Title }}", title)
     template = template.replace('''{{ Content }}''', content)
+    template = template.replace('''href="/''', f"href=\"{basepath}/")
+    template = template.replace('''src="/''', f"src=\"{basepath}/")
+    
 
     
 
