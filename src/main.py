@@ -7,7 +7,7 @@ import shutil
 import os
 import sys
 
-basepath = f"{sys.argv[0]}/"
+basepath = f"{sys.argv[1]}/"
 
 def from_static_to_public(source_directory, destination_directory):
 
