@@ -10,7 +10,6 @@ class BlockType(Enum):
     HEADING = "heading"
     CODE = "code"
     QUOTE = "quite"
-    BLOCKQUOTE = "blockquote"
     OLIST = "ordered_list"
     ULIST = "unordered_list"
 
@@ -38,7 +37,6 @@ def block_to_block_type(block):
             if not line.startswith(">"):
                 return BlockType.PARAGRAPH
         return BlockType.QUOTE
-
     if block.startswith("- "):
         for line in lines:
             if not line.startswith("- "):
@@ -146,18 +144,7 @@ def quote_to_html_node(block):
     for line in lines:
         if not line.startswith(">"):
             raise ValueError("invalid quote block")
-        stripped_line = line.lstrip(">").strip()
-        if stripped_line:  # Only add non-empty lines
-            new_lines.append(stripped_line)
+        new_lines.append(line.lstrip(">").strip())
     content = " ".join(new_lines)
     children = text_to_children(content)
     return ParentNode("blockquote", children)
-
-def extract_title(markdown):
-    blocks = markdown_to_blocks(markdown)
-    if len(blocks) == 0:
-        return None
-    for block in blocks:
-        if block.startswith("# "):
-            return block[2:]
-    raise Exception("no title found")
