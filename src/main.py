@@ -45,7 +45,7 @@ def main():
     generate_pages_recursive(dir_path_content, template_path, dir_path_public, basepath)
     print(basepath)
     
-    
+
 
         
     
