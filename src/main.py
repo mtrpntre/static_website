@@ -7,7 +7,11 @@ import shutil
 import os
 import sys
 
-basepath = f"{sys.argv[1]}/"
+dir_path_static = "./static"
+dir_path_public = "./docs"
+dir_path_content = "./content"
+template_path = "./template.html"
+default_basepath = "/"
 
 def from_static_to_public(source_directory, destination_directory):
 
@@ -30,10 +34,15 @@ def delete_directory_content(directory):
             os.remove(item_path)
 
 def main():
+
+    basepath = default_basepath
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
+
    
-    delete_directory_content("docs")
-    from_static_to_public("static", "docs")
-    generate_pages_recursive("content", "template.html", "docs", basepath)
+    delete_directory_content(dir_path_public)
+    from_static_to_public(dir_path_static, dir_path_public)
+    generate_pages_recursive(dir_path_content, template_path, dir_path_public, basepath)
     print(basepath)
     
     
